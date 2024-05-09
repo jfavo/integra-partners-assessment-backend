@@ -1,4 +1,6 @@
 %syntax-version=1.0.0
-%project=integra-partners-db
-%uri=https://github.com/jfavo/integra-partners-backend/
+%project=integra-partners-assessment-db
+%uri=https://github.com/jfavo/integra-partners-assessment-backend/
 
+appschema 2024-05-09T18:24:39Z Joshua <jfavo@outlook.com> # Add schema for integra partners objects.
+createusers 2024-05-09T18:41:08Z Joshua <jfavo@outlook.com> # Add users table and dependent types

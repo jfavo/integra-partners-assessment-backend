@@ -7,3 +7,6 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     postgresql-client \
     libdbd-sqlite3-perl \
     sqlite3
+
+# Copy Sqitch initialize script
+COPY init-sqitch.sh /etc
