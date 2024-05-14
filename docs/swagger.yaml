@@ -1,0 +1,237 @@
+definitions:
+  errors.ErrorCode:
+    enum:
+    - 10000
+    - 10001
+    - 10002
+    - 10003
+    - 10004
+    - 10005
+    - 10006
+    - 10007
+    - 10008
+    - 10009
+    - 10010
+    type: integer
+    x-enum-varnames:
+    - DBRepoFailedToInitialize
+    - UsersRepoGetAllUsersDBQueryFail
+    - UsersRepoCreateUserDBQueryFail
+    - UsersRepoUserDuplicateUsername
+    - UsersRepoUserDuplicateEmail
+    - UsersRepoUserInvalidUserStatus
+    - UsersRepoUpdateUserDBQueryFail
+    - UsersRepoUpdateInvalidUserId
+    - UsersRepoDeleteUserDBQueryFail
+    - UsersControllerUserFailedToBindBody
+    - UsersControllerInvalidUserIdParam
+  models.User:
+    properties:
+      department:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      user_id:
+        type: integer
+      user_name:
+        type: string
+      user_status:
+        type: string
+    type: object
+  response.Response:
+    properties:
+      data: {}
+      error_code:
+        $ref: '#/definitions/errors.ErrorCode'
+      error_message:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: RESTful API to support the IP Assessment Front end application
+  title: IP Assessment API
+  version: "1.0"
+paths:
+  /users:
+    get:
+      description: Show all available users from data store
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.User'
+                error_code:
+                  type: object
+                error_message:
+                  type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  type: object
+                error_code:
+                  type: integer
+                error_message:
+                  type: string
+              type: object
+      summary: Returns all users
+      tags:
+      - Users
+    post:
+      description: Creates a new user in the data store. Returns new user when successful
+      parameters:
+      - description: User data to be ingested
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.User'
+                  type: array
+                error_code:
+                  type: object
+                error_message:
+                  type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  type: object
+                error_code:
+                  type: integer
+                error_message:
+                  type: string
+              type: object
+      summary: Creates a new user
+      tags:
+      - Users
+    put:
+      description: Updates a new user in the data store. Returns updated user when
+        successful
+      parameters:
+      - description: User data to be ingested
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.User'
+                  type: array
+                error_code:
+                  type: object
+                error_message:
+                  type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  type: object
+                error_code:
+                  type: integer
+                error_message:
+                  type: string
+              type: object
+      summary: Updates an existing user
+      tags:
+      - Users
+  /users/{userId}:
+    delete:
+      description: Deletes the user from the data store with the associated ID
+      parameters:
+      - description: User Id for the user to be removed
+        in: path
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.User'
+                  type: array
+                error_code:
+                  type: object
+                error_message:
+                  type: object
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  type: object
+                error_code:
+                  type: object
+                error_message:
+                  type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  type: object
+                error_code:
+                  type: integer
+                error_message:
+                  type: string
+              type: object
+      summary: Delete a user by the userId
+      tags:
+      - Users
+swagger: "2.0"

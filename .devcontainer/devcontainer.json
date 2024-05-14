@@ -10,7 +10,8 @@
 			"extensions": [
 				"ms-azuretools.vscode-docker",
 				"golang.go",
-				"cweijan.vscode-postgresql-client2"
+				"cweijan.vscode-postgresql-client2",
+				"ms-vscode.makefile-tools"
 			]
 		}
 	},

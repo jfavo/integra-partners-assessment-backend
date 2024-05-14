@@ -2,7 +2,31 @@
 
 ## Development
 
-There is a VSCode devcontainer configuration that provides all dependencies for the backend.
+There is a VSCode devcontainer configuration that provides all dependencies for the backend including a PostgreSQL DB instance.
+
+## Initial Startup
+
+When you first start the devcontainer, you will need to first deploy the database schema to our local instance.
+
+```bash
+# This will deploy our DB schema and tables to our local instance
+$ make db-deploy
+```
+
+Once that is complete, we can start the service:
+
+```bash
+# This will start our server running on port 8080
+$ make start
+```
+
+### Postman
+
+There is a Postman script included that can be used to test our endpoints [here](./integra-partners-backend.postman_collection.json)
+
+### Swagger
+
+When our server is up and running, we can also use the Swagger page that is located at http://localhost:8080/docs/index.html
 
 ## Database
 
@@ -13,7 +37,7 @@ Tech Stack:
 
 ## Making changes
 
->Note: all sqitch commands need to be made from the `./sqitch` directory
+>Note: all direct sqitch commands need to be made from the `./sqitch` directory
 
 Sqitch creates plans for any changes made to the DB schema. In order to make any modifications you can follow below:
 
@@ -37,5 +61,15 @@ $ sqitch revert newplan
 
 # Runs the verify script
 $ sqitch verify newplan
+
+# There are also Make commands that can be run from the root directory
+# Deploys changes to the DB
+$ make db-deploy
+
+# Reverts the new changes from the DB
+$ make db-revert
+
+# Runs the verify script
+$ make db-verify
 ```
 
