@@ -78,7 +78,9 @@ func (uc UserController) CreateUser(ctx echo.Context) error {
 		errMessage := errors.GetErrorMessage(errCode)
 		logging.ErrorWithCode(errCode, errMessage, err)
 
-		return ctx.JSON(http.StatusInternalServerError, response.Failure(errCode, errMessage))
+		statusCode := getHttpStatusCodeForErr(errCode)
+
+		return ctx.JSON(statusCode, response.Failure(errCode, errMessage))
 	}
 
 	return ctx.JSON(http.StatusOK, response.Success(newUser))
@@ -115,7 +117,7 @@ func (uc UserController) UpdateUser(ctx echo.Context) error {
 		errMessage := errors.GetErrorMessage(errCode)
 		logging.ErrorWithCode(errCode, errMessage, err)
 
-		statusCode := http.StatusInternalServerError
+		statusCode := getHttpStatusCodeForErr(errCode)
 
 		return ctx.JSON(statusCode, response.Failure(errCode, errMessage))
 	}
@@ -158,4 +160,20 @@ func (uc UserController) DeleteUser(ctx echo.Context) error {
 	}
 
 	return ctx.JSON(http.StatusOK, response.Success(id))
+}
+
+// getHttpStatusCodeForErr returns the http status code for the specified
+// errors.ErrorCode.
+//
+// Will return http.StatusInternalServerError (500) status code if errCode
+// does not have a specific status code for it.
+func getHttpStatusCodeForErr(errCode errors.ErrorCode) int {
+	switch errCode {
+	case errors.UsersRepoUserDuplicateEmail:
+		fallthrough
+	case errors.UsersRepoUserDuplicateUsername:
+		return http.StatusConflict
+	}
+
+	return http.StatusInternalServerError
 }

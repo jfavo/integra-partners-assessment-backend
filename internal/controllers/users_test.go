@@ -137,6 +137,26 @@ var _ = Describe("UserController", Ordered, func() {
 			Expect(strings.ReplaceAll(rec.Body.String(), "\n", "")).To(Equal(string(b)))
 		})
 
+		It("should fail if user with username already exists in DB", func() {
+			expectedCode := ipErrors.UsersRepoUserDuplicateUsername
+			expectedMsg := ipErrors.GetErrorMessage(expectedCode)
+
+			req = createTestRequest(http.MethodPost, "/users", constants.TestUsers[0])
+			req.Header.Add("Content-Type", "application/json")
+			ctx = e.NewContext(req, rec)
+			
+			mockRepo.EXPECT().CreateUser(constants.TestUsers[0]).Return(nil, expectedCode, errors.New("Failed!"))
+			userController := &controllers.UserController{
+				Repo: mockRepo,
+			}
+			userController.CreateUser(ctx)
+
+			b, _ := json.Marshal(response.Failure(expectedCode, expectedMsg))
+			
+			Expect(rec.Code).To(Equal(http.StatusConflict))
+			Expect(strings.ReplaceAll(rec.Body.String(), "\n", "")).To(Equal(string(b)))
+		})
+
 		It("should fail with DB error", func() {
 			expectedCode := ipErrors.UsersRepoCreateUserDBQueryFail
 			expectedMsg := ipErrors.GetErrorMessage(expectedCode)
@@ -196,6 +216,26 @@ var _ = Describe("UserController", Ordered, func() {
 			Expect(rec.Code).To(Equal(http.StatusBadRequest))
 			Expect(strings.ReplaceAll(rec.Body.String(), "\n", "")).To(Equal(string(b)))
 		}) 
+
+		It("should fail if user with email already exists in DB", func() {
+			expectedCode := ipErrors.UsersRepoUserDuplicateEmail
+			expectedMsg := ipErrors.GetErrorMessage(expectedCode)
+
+			req = createTestRequest(http.MethodPost, "/users", constants.TestUsers[0])
+			req.Header.Add("Content-Type", "application/json")
+			ctx = e.NewContext(req, rec)
+			
+			mockRepo.EXPECT().CreateUser(constants.TestUsers[0]).Return(nil, expectedCode, errors.New("Failed!"))
+			userController := &controllers.UserController{
+				Repo: mockRepo,
+			}
+			userController.CreateUser(ctx)
+
+			b, _ := json.Marshal(response.Failure(expectedCode, expectedMsg))
+			
+			Expect(rec.Code).To(Equal(http.StatusConflict))
+			Expect(strings.ReplaceAll(rec.Body.String(), "\n", "")).To(Equal(string(b)))
+		})
 
 		It("should fail when DB returns an error", func() {
 			input := constants.TestUsers[0]
