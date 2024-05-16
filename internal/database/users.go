@@ -199,9 +199,7 @@ func createUpdateSetMap(user models.User) squirrel.Eq {
 		setMap["user_status"] = user.UserStatus
 	}
 
-	if user.Department != "" {
-		setMap["department"] = user.Department
-	}
+	setMap["department"] = user.Department
 
 	return setMap
 }
