@@ -10,3 +10,6 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 
 # Copy Sqitch initialize script
 COPY init-sqitch.sh /etc
+
+# Install Go CLI dependencies
+RUN go install github.com/onsi/ginkgo/v2/ginkgo@v2.17.3 && go install github.com/swaggo/swag/cmd/swag@v1.16.3
