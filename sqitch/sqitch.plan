@@ -2,6 +2,7 @@
 %project=integra-partners-assessment-db
 %uri=https://github.com/jfavo/integra-partners-assessment-backend/
 
-IPA-1/appschema 2024-05-09T18:24:39Z Joshua <jfavo@outlook.com> # Add schema for integra partners objects.
-IPA-2/users 2024-05-09T18:41:08Z Joshua <jfavo@outlook.com> # Add users table and dependent types
-IPA-2/useruniqueindexes 2024-05-10T22:19:35Z Joshua <jfavo@outlook.com> # Add unique constraints for users user_name and email
+IPA-1/add_schema 2024-05-09T18:24:39Z Joshua <jfavo@outlook.com> # Add schema for integra partners objects.
+IPA-2/add_users_table 2024-05-09T18:41:08Z Joshua <jfavo@outlook.com> # Add users table and dependent types
+IPA-2/add_unique_indexes_users 2024-05-10T22:19:35Z Joshua <jfavo@outlook.com> # Add unique constraints for users user_name and email
+@v1.0.0 2024-05-21T14:11:40Z Joshua <jfavo@outlook.com> # Release v1.0.0
