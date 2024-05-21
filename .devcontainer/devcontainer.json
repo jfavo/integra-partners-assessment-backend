@@ -16,8 +16,8 @@
 		}
 	},
 
-	// Run our sqitch initialize script once the devcontainer is running
-	"postStartCommand": "sh /etc/init-sqitch.sh"
+	// Install Ginkgo and run our sqitch initialize script once the devcontainer is running
+	"postStartCommand": "go install github.com/onsi/ginkgo/v2/ginkgo && sh /etc/init-sqitch.sh"
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"

@@ -16,12 +16,6 @@ import (
 	"github.com/swaggo/echo-swagger"
 )
 
-type Server struct {
-	Echo        *echo.Echo
-	Config      config.Config
-	Controllers []controllers.Controller
-}
-
 // StartServer will create a new server instance and all dependent resources.
 //
 // Will throw panic if the DB repository fails to initialize.
