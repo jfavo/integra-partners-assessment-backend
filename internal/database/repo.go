@@ -14,20 +14,20 @@ import (
 	"github.com/jfavo/integra-partners-assessment-backend/internal/models"
 )
 
-type IRepo interface {
+type Repo interface {
 	GetAllUsers() ([]models.User, errors.ErrorCode, error)
 	CreateUser(models.User) (*models.User, errors.ErrorCode, error)
 	UpdateUser(models.User) (*models.User, errors.ErrorCode, error)
 	DeleteUser(userId int) (bool, errors.ErrorCode, error)
 }
 
-type Repo struct {
+type ServiceRepo struct {
 	DB 		*sqlx.DB
 	psql 	squirrel.StatementBuilderType
 }
 
-func CreateDefault() Repo {
-	return Repo{
+func CreateDefault() ServiceRepo {
+	return ServiceRepo{
 		psql: 	squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar),
 	}
 }
@@ -37,7 +37,7 @@ func CreateDefault() Repo {
 // Returns error if either the sqlx.DB client fails to open, or if we cannot
 // verify the connection to the DB.
 // If error is returned, an error code associated with it will be returned as well.
-func CreateNewRepo(dbConfig config.DatabaseConfig) (IRepo, error) {
+func CreateNewRepo(dbConfig config.DatabaseConfig) (Repo, error) {
 	dsnString := fmt.Sprintf(
 		"user=%s password=%s host=%s port=%s database=%s sslmode=%s", 
 		dbConfig.Username, 

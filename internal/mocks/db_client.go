@@ -10,8 +10,8 @@ import (
 
 // CreateRepoWithMockedDBDriver returns a Repo instance with a sqlmock DB instance
 // attached to perform unit testing with.
-func CreateRepoWithMockedDBDriver() (database.IRepo, sqlmock.Sqlmock, func()) {
-	var repo database.IRepo
+func CreateRepoWithMockedDBDriver() (database.Repo, sqlmock.Sqlmock, func()) {
+	var repo database.Repo
 	var dbMock sqlmock.Sqlmock
 	var db *sql.DB
 

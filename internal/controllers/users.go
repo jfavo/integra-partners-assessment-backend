@@ -15,11 +15,11 @@ import (
 
 type UserController struct {
 	Controller
-	Repo database.IRepo
+	Repo database.Repo
 }
 
 // createDefault will update itself with necessary components 
-func (uc UserController) createDefault(repo database.IRepo) Controller {
+func (uc UserController) createDefault(repo database.Repo) Controller {
 	return &UserController{
 		Repo: repo,
 	}

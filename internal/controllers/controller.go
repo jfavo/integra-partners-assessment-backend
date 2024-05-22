@@ -6,7 +6,7 @@ import (
 )
 
 type Controller interface {
-	createDefault(repo database.IRepo) Controller
+	createDefault(repo database.Repo) Controller
 	registerRoutes(e *echo.Echo) Controller
 }
 
@@ -14,7 +14,7 @@ type Controller interface {
 // with a Repo instance.
 // It will also call the Controllers RegisterRoutes function to allow
 // it to register any routes it may control.
-func Initialize[T Controller](repo database.IRepo, e *echo.Echo) {
+func Initialize[T Controller](repo database.Repo, e *echo.Echo) {
 	var controller T
 	controller.
 		createDefault(repo).

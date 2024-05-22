@@ -13,7 +13,7 @@ import (
 var _ = Describe("Controller", func() {
 
 	Describe("Initialize", Ordered, func() {
-		var repo database.Repo
+		var repo database.ServiceRepo
 		var e *echo.Echo
 
 		BeforeAll(func() {

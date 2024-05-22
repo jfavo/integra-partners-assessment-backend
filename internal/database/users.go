@@ -18,7 +18,7 @@ import (
 // Returns a slice of Users.
 // Returns an error and error code if creating the SQL query or querying DB fails.
 // If error is returned, an error code associated with it will be returned as well.
-func (r Repo) GetAllUsers() ([]models.User, ipErrors.ErrorCode, error) {
+func (r ServiceRepo) GetAllUsers() ([]models.User, ipErrors.ErrorCode, error) {
 	users := []models.User{}
 
 	rows, err := r.psql.
@@ -56,7 +56,7 @@ func (r Repo) GetAllUsers() ([]models.User, ipErrors.ErrorCode, error) {
 // Returns the created User if successful.
 // Returns an error and error code if creating the SQL query or querying DB fails.
 // If error is returned, an error code associated with it will be returned as well.
-func (r Repo) CreateUser(user models.User) (*models.User, ipErrors.ErrorCode, error) {
+func (r ServiceRepo) CreateUser(user models.User) (*models.User, ipErrors.ErrorCode, error) {
 	returnedUser := new(models.User)
 
 	err := r.psql.
@@ -91,7 +91,7 @@ func (r Repo) CreateUser(user models.User) (*models.User, ipErrors.ErrorCode, er
 // Returns the updated User if successful.
 // Returns an error and error code if creating the SQL query or querying DB fails.
 // If error is returned, an error code associated with it will be returned as well.
-func (r Repo) UpdateUser(user models.User) (*models.User, ipErrors.ErrorCode, error) {
+func (r ServiceRepo) UpdateUser(user models.User) (*models.User, ipErrors.ErrorCode, error) {
 	returnedUser := new(models.User)
 
 	// Creates our set statements
@@ -128,7 +128,7 @@ func (r Repo) UpdateUser(user models.User) (*models.User, ipErrors.ErrorCode, er
 // Returns true if the user was successfully removed.
 // Returns an error and error code if creating the SQL query or querying DB fails.
 // If error is returned, an error code associated with it will be returned as well.
-func (r Repo) DeleteUser(userId int) (bool, ipErrors.ErrorCode, error) {
+func (r ServiceRepo) DeleteUser(userId int) (bool, ipErrors.ErrorCode, error) {
 	res, err := r.psql.Delete(constants.UsersTableName).
 		Where("user_id = ?", userId).
 		Suffix("RETURNING user_id").

@@ -18,7 +18,7 @@ import (
 )
 
 var _ = Describe("Users", Ordered, func() {
-	var repo database.IRepo
+	var repo database.Repo
 	var dbMock sqlmock.Sqlmock
 	var closeFunc func()
 	var testUser models.User
